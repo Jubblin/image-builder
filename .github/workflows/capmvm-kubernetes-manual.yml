@@ -8,7 +8,7 @@ defaults:
   run:
     working-directory: capmvm/kubernetes
 env:
-  REGISTRY: ${env.REGISTRY}
+  REGISTRY: ${{ vars.REGISTRY }}
   
 jobs:
   release:
