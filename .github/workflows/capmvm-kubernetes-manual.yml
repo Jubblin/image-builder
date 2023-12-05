@@ -24,5 +24,6 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - name: Build and push
         run: |
+          printenv
           make
           make push
