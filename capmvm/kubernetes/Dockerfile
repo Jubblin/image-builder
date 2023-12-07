@@ -62,14 +62,14 @@ RUN wget https://github.com/containerd/containerd/releases/download/v${CONTAINER
 ### Add apt repos
 # Kubeadm, Kubelet, and Kubectl
 RUN mkdir -p /etc/apt/keyrings/ && \
-RUN printf "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v${KUBERNETES_VERSION}/deb/ /" | tee /etc/apt/sources.list.d/kubernetes.list && \
-RUN curl -fsSL https://pkgs.k8s.io/core:/stable:/v${KUBERNETES_VERSION}/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
+RUN printf "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v${KUBERNETES_VERSION}/deb/ /" | tee /etc/apt/sources.list.d/kubernetes.list
+RUN curl -fsSL https://pkgs.k8s.io/core:/stable:/v${KUBERNETES_VERSION}/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
 RUN apt-get update && apt-get install --no-install-recommends -y \
         kubeadm=${KUBERNETES_VERSION}.${KUBERNETES_SUFFIX} \
         kubelet=${KUBERNETES_VERSION}.${KUBERNETES_SUFFIX} \
-        kubectl=${KUBERNETES_VERSION}.${KUBERNETES_SUFFIX} && \
-RUN apt-get clean && \
-RUN rm -rf /var/lib/apt/lists/* && \
+        kubectl=${KUBERNETES_VERSION}.${KUBERNETES_SUFFIX}
+RUN apt-get clean
+RUN rm -rf /var/lib/apt/lists/*
 RUN apt-mark hold kubelet kubeadm kubectl
 
 RUN mkdir -p /etc/containerd && containerd config default > /etc/containerd/config.toml && \
