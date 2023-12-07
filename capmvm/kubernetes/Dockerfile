@@ -62,8 +62,7 @@ RUN wget https://github.com/containerd/containerd/releases/download/v${CONTAINER
 ### Add apt repos
 # Kubeadm, Kubelet, and Kubectl
 RUN mkdir -p /etc/apt/keyrings/ && \
-    echo "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] \
-    https://pkgs.k8s.io/core:/stable:/v${KUBERNETES_VERSION}/deb/ /" | tee /etc/apt/sources.list.d/kubernetes.list && \
+    echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v${KUBERNETES_VERSION}/deb/ /' | tee /etc/apt/sources.list.d/kubernetes.list && \
     curl -fsSL https://pkgs.k8s.io/core:/stable:/v${KUBERNETES_VERSION}/deb/Release.key \
     | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg && \
     apt-get update && apt-get install --no-install-recommends -y \
