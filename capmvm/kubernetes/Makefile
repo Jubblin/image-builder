@@ -6,7 +6,7 @@ REGISTRY?=ghcr.io/weaveworks-liquidmetal
 IMAGE_NAME?=$(REGISTRY)/capmvm-k8s-os
 CONTAINERD_VERSION?=1.5.9
 TAG?=$(shell git rev-parse --short HEAD)
-
+OS_VERSION=22.04
 RELEASE_VERSIONS?=1.21.8 1.22.3 1.22.8 1.23.5 1.29.2 # RELEASE follows the kubernetes release
 
 build: $(addprefix build-,$(RELEASE_VERSIONS))
@@ -14,6 +14,7 @@ build-%:
 	$(DOCKER) build -t $(IMAGE_NAME):$*  \
 		--build-arg KUBERNETES_VERSION=$* \
 		--build-arg CONTAINERD_VERSION=$(CONTAINERD_VERSION) \
+		--build-arg OS_VERSION=$(OS_VERSION) \
 		--label "org.opencontainers.image.created"="$(BUILD_DATE)" \
 		--label "org.opencontainers.image.authors"="Liquid Metal Authors" \
 		--label "org.opencontainers.image.url"="https://github.com/weaveworks-liquidmetal/image-builder" \
